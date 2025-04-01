@@ -6,13 +6,13 @@ require_once 'init/intializeEnv.php';
 
 //routes:
 require_once 'router.php';
-require_once './routes/api.php';
-require_once './routes/web.php';    
+require_once './app/routes/api.php';
+require_once './app/routes/web.php';    
 
 
 
 //Controllers:
-$controllerFiles = glob('controllers/*.php');
+$controllerFiles = glob('app/controllers/*.php');
 foreach ($controllerFiles as $file) {
     require_once $file;
 }
