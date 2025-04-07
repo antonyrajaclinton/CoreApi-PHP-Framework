@@ -1,6 +1,0 @@
-{"date":"2025-04-07 08:29:09","level":1049,"message":"SQLSTATE[HY000] [1049] Unknown database 'tesdt'","file":"C:\\xampp\\htdocs\\system\\init\\initDatabaseConnection.php","line":17},
-{"date":"2025-04-07 08:29:10","level":1049,"message":"SQLSTATE[HY000] [1049] Unknown database 'tesdt'","file":"C:\\xampp\\htdocs\\system\\init\\initDatabaseConnection.php","line":17},
-{"date":"2025-04-07 08:29:10","level":1049,"message":"SQLSTATE[HY000] [1049] Unknown database 'tesdt'","file":"C:\\xampp\\htdocs\\system\\init\\initDatabaseConnection.php","line":17},
-{"date":"2025-04-07 08:39:20","level":1049,"message":"SQLSTATE[HY000] [1049] Unknown database 'tesdt'","file":"C:\\xampp\\htdocs\\system\\init\\initDatabaseConnection.php","line":17},
-{"date":"2025-04-07 08:39:20","level":1049,"message":"SQLSTATE[HY000] [1049] Unknown database 'tesdt'","file":"C:\\xampp\\htdocs\\system\\init\\initDatabaseConnection.php","line":17},
-{"date":"2025-04-07 08:39:35","level":1049,"message":"SQLSTATE[HY000] [1049] Unknown database 'tesdt'","file":"C:\\xampp\\htdocs\\system\\init\\initDatabaseConnection.php","line":17},
