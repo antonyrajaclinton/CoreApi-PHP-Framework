@@ -1,5 +1,5 @@
 <?php
-namespace System\Core\Handlers;
+namespace Root\Base\Handlers;
 
 class Response
 {

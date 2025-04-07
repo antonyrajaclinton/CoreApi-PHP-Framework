@@ -3,10 +3,10 @@
 //system:
 //load .env file:
 require_once 'init/initEnv.php';
-require_once 'core/handlers/logHandler.php';
-require_once 'core/handlers/responseHandler.php';
-require_once 'core/utilities.php';
-require_once 'core/exception.php';
+require_once 'base/handlers/logHandler.php';
+require_once 'base/handlers/responseHandler.php';
+require_once 'base/utilities.php';
+require_once 'base/exception.php';
 require_once 'init/initDatabaseConnection.php';
 
 //routes:

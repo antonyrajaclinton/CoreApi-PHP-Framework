@@ -1,7 +1,7 @@
 <?php
 
-use System\Core\Handlers\Response;
-use System\Core\Handlers\Logger;
+use Root\Base\Handlers\Response;
+use Root\Base\Handlers\Logger;
 
 class ErrorHandler
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Core;
+namespace Root\Base;
 class Utilities
 {
     static function makeDirectoryIfNotExists($dir): void

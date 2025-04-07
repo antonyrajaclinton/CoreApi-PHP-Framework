@@ -1,8 +1,8 @@
 <?php
 
-namespace System\Core\Handlers;
+namespace Root\Base\Handlers;
 
-use System\Core\Utilities;
+use Root\Base\Utilities;
 
 class Logger
 {
