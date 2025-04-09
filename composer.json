@@ -1,0 +1,22 @@
+{
+    "name": "core/api",
+    "description": "light weight framework for backend",
+    "autoload": {
+        "psr-4": {
+          
+        }
+    },
+    "authors": [
+        {
+            "name": "Clinton S",
+            "email": "antonyrajaclintons@gmail.com"
+        }
+    ],
+    "scripts": {
+        "dev": [
+            "php -S 0.0.0.0:8000"
+        ]
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
