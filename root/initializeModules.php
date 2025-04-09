@@ -7,14 +7,14 @@ require_once 'base/handlers/logHandler.php';
 require_once 'base/handlers/responseHandler.php';
 require_once 'base/utilities.php';
 require_once 'base/exception.php';
-require_once 'init/initDatabaseConnection.php';
+require_once 'init/initDatabase.php';
+require_once 'base/db.php';
 
 //routes:
 require_once 'router.php';
 require_once './app/routes/api.php';
 require_once './app/routes/web.php';    
 
-echo $test;
 
 //Controllers:
 $controllerFiles = glob('app/controllers/*.php');
