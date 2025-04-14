@@ -138,4 +138,17 @@ class Request
         }
         return null;
     }
+
+    public static function sanitizeFields(array $requestFields)
+    {
+        array_walk($requestFields, function (&$value, $key) {
+            if (!empty($value) || $value == 0) {
+                $removedScripts = preg_replace('#<script[^>]*>.*?</script>#is', "", $value);
+                $value = htmlspecialchars($removedScripts, ENT_QUOTES, 'UTF-8');
+            } else {
+                $value = null;
+            }
+        });
+        return $requestFields;
+    }
 }

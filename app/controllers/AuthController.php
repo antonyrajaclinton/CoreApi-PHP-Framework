@@ -10,7 +10,7 @@ class AuthController
 
    public function signIn()
    {
-      $getUserName = Request::input('userName', 'dd');
+      $getUserName = Request::input('userNadme', 'dd');
       $getEmailAddress = Request::input();
       $getPassword = Request::input();
       $uploadProfileImage = File::upload('file', 'uploads/profileImages');
