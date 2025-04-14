@@ -3,9 +3,13 @@
 //system:
 //load .env file:
 require_once 'init/initEnv.php';
-require_once 'base/handlers/logHandler.php';
-require_once 'base/handlers/responseHandler.php';
-require_once 'base/handlers/requestHandler.php';
+
+//handlers:
+$handlerFiles = glob('root/base/handlers/*.php');
+foreach ($handlerFiles as $file) {
+    require_once $file;
+}
+
 require_once 'base/utilities.php';
 require_once 'base/exception.php';
 require_once 'init/initDatabase.php';
@@ -13,10 +17,12 @@ require_once 'base/db.php';
 
 //routes:
 require_once 'router.php';
-require_once './app/routes/api.php';
-require_once './app/routes/web.php';    
-
-
+//handlers:
+$routeFiles = glob('app/routes/*.php');
+foreach ($routeFiles as $file) {
+    require_once $file;
+}
+  
 //Controllers:
 $controllerFiles = glob('app/controllers/*.php');
 foreach ($controllerFiles as $file) {

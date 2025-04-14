@@ -3,18 +3,18 @@
 namespace Controllers;
 
 use Root\Base\Handlers\Request;
+use Root\Base\Handlers\File;
 
 class AuthController
 {
 
    public function signIn()
    {
-      $getUserName = Request::input('userName','dd');
+      $getUserName = Request::input('userName', 'dd');
       $getEmailAddress = Request::input();
       $getPassword = Request::input();
+      $uploadProfileImage = File::upload('file', 'uploads/profileImages');
 
-
-    print_r($getUserName);
    }
    public function signUp()
    {
