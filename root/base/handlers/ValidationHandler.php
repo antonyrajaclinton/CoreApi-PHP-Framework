@@ -2,40 +2,45 @@
 
 namespace Root\Base\Handlers;
 
+use Root\Base\Handlers\Response;
+
 class Validation
 {
-    public static function validate(array $requestArrays, array $validationArrays): array
+    public static function validate(array $requestArrays, array $validationArrays, bool $autoStop = false): array
     {
         $errorsArray = [];
         //available input Validation: email, mobile, date, europeanDate, integer, float, zipcode/postcode, ex: 'userName:email'
         foreach ($validationArrays as $validateArray) {
-            if (isset($requestArrays[$validateArray])) {
-                $getValue = $requestArrays[$validateArray];
-                $splitedValue = is_string($getValue) ? explode(':', $getValue) : [$getValue];
-                if (self::isNotEmpty($splitedValue[0])) {
+            $splitedValue = is_string($validateArray) ? explode(':', $validateArray) : [$validateArray];
+            if (isset($requestArrays[$splitedValue[0]])) {
+                $getValue = $requestArrays[$splitedValue[0]];
+                if (self::isNotEmpty($getValue)) {
                     if (isset($splitedValue[1])) {
-                        if ($splitedValue[1] == 'email' && !self::isValidEmail($splitedValue[0])) {
-                            $errorsArray[$validateArray] = "{$splitedValue[1]} is not valid";
-                        } else if ($splitedValue[1] == 'mobile' && !self::isValidMobile($splitedValue[0])) {
-                            $errorsArray[$validateArray] = "{$splitedValue[1]} is not valid";
-                        } else if ($splitedValue[1] == 'integer' && !self::isValidInteger($splitedValue[0])) {
-                            $errorsArray[$validateArray] = "{$splitedValue[1]} is not valid";
-                        } else if ($splitedValue[1] == 'float' && !self::isValidFloat($splitedValue[0])) {
-                            $errorsArray[$validateArray] = "{$splitedValue[1]} is not valid";
-                        } else if (($splitedValue[1] == 'zipcode' || $splitedValue[1] == 'postcode') && !self::isValidZipOrPostalCode($splitedValue[0])) {
-                            $errorsArray[$validateArray] = "{$splitedValue[1]} is not valid";
-                        } else if ($splitedValue[1] == 'date' && !self::isValidDate($splitedValue[0])) {
-                            $errorsArray[$validateArray] = "{$splitedValue[1]} is not valid. Date must be YYYY-MM-DD";
-                        } else if ($splitedValue[1] == 'europeanDate' && !self::isValidEuropeanDate($splitedValue[0])) {
-                            $errorsArray[$validateArray] = "{$splitedValue[1]} is not valid. Date must be DD-MM-YYYY";
+                        if ($splitedValue[1] == 'email' && !self::isValidEmail($getValue)) {
+                            $errorsArray[$splitedValue[0]] = "{$splitedValue[1]} is not valid";
+                        } else if ($splitedValue[1] == 'mobile' && !self::isValidMobile($getValue)) {
+                            $errorsArray[$splitedValue[0]] = "{$splitedValue[1]} is not valid";
+                        } else if ($splitedValue[1] == 'integer' && !self::isValidInteger($getValue)) {
+                            $errorsArray[$splitedValue[0]] = "{$splitedValue[1]} is not valid";
+                        } else if ($splitedValue[1] == 'float' && !self::isValidFloat($getValue)) {
+                            $errorsArray[$splitedValue[0]] = "{$splitedValue[1]} is not valid";
+                        } else if (($splitedValue[1] == 'zipcode' || $splitedValue[1] == 'postcode') && !self::isValidZipOrPostalCode($getValue)) {
+                            $errorsArray[$splitedValue[0]] = "{$splitedValue[1]} is not valid";
+                        } else if ($splitedValue[1] == 'date' && !self::isValidDate($getValue)) {
+                            $errorsArray[$splitedValue[0]] = "{$splitedValue[1]} is not valid. Date must be YYYY-MM-DD";
+                        } else if ($splitedValue[1] == 'europeanDate' && !self::isValidEuropeanDate($getValue)) {
+                            $errorsArray[$splitedValue[0]] = "{$splitedValue[1]} is not valid. Date must be DD-MM-YYYY";
                         }
                     }
                 } else {
-                    $errorsArray[$validateArray] = 'value is required';
+                    $errorsArray[$splitedValue[0]] = 'value is required';
                 }
             } else {
-                $errorsArray[$validateArray] = 'field is required';
+                $errorsArray[$splitedValue[0]] = 'field is required';
             }
+        }
+        if ($autoStop && count($errorsArray) !== 0) {
+            Response::JSON(['status' => false, 'message' => 'validation Error', 'error' => $errorsArray]);
         }
         return $errorsArray;
     }
@@ -46,9 +51,10 @@ class Validation
     }
     public static function isValidEmail($value)
     {
-        if (self::isNotEmpty($value)) {
+        if (!self::isNotEmpty($value)) {
             return false;
         }
+
         if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
@@ -56,7 +62,7 @@ class Validation
     }
     public static function isValidMobile($value)
     {
-        if (self::isNotEmpty($value)) {
+        if (!self::isNotEmpty($value)) {
             return false;
         }
         $pattern = "/^\+?[0-9\s\-\(\)]{7,20}$/";
@@ -81,7 +87,7 @@ class Validation
     }
     public static function isValidZipOrPostalCode($value)
     {
-        if (self::isNotEmpty($value)) {
+        if (!self::isNotEmpty($value)) {
             return false;
         }
         $pattern = "/^\d{6}$/";
@@ -92,7 +98,7 @@ class Validation
     }
     public static function isValidDate($value) //YYYY-MM-DD
     {
-        if (self::isNotEmpty($value)) {
+        if (!self::isNotEmpty($value)) {
             return false;
         }
         $pattern = "/^\d{4}-\d{2}-\d{2}$/";
@@ -104,7 +110,7 @@ class Validation
     }
     public static function isValidEuropeanDate($value)  //DD-MM-YYYY
     {
-        if (self::isNotEmpty($value)) {
+        if (!self::isNotEmpty($value)) {
             return false;
         }
         $pattern = "/^\d{2}-\d{2}-\d{4}$/";
