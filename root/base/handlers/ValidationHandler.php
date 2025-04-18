@@ -2,11 +2,12 @@
 
 namespace Root\Base\Handlers;
 
+use Error;
 use Root\Base\Handlers\Response;
 
 class Validation
 {
-    public static function validate(array $requestArrays, array $validationArrays, bool $autoStop = false): array
+    public static function validate(array $requestArrays, array $validationArrays, bool $autoStop = false)
     {
         $errorsArray = [];
         //available input Validation: email, mobile, date, europeanDate, integer, float, zipcode/postcode, ex: 'userName:email'
@@ -39,10 +40,15 @@ class Validation
                 $errorsArray[$splitedValue[0]] = 'field is required';
             }
         }
-        if ($autoStop && count($errorsArray) !== 0) {
-            Response::JSON(['status' => false, 'message' => 'validation Error', 'error' => $errorsArray]);
+        if (count($errorsArray) !== 0) {
+            if ($autoStop) {
+                throw new Error((string)json_encode($errorsArray));
+            } else {
+                return ['status' => false, 'error' => $errorsArray];
+            }
+        } else {
+            return ['status' => true, 'error' => null];
         }
-        return $errorsArray;
     }
 
     public static function isNotEmpty($value)

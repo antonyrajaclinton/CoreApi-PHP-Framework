@@ -56,8 +56,8 @@ class DB
 }
 
 
-$getInstance = new DB();
+// $getInstance = new DB();
 
-$getInstance->table('users')->insert(['user_name' => "adsddfasd`dd",'user_email'=>'hello']);
+// $getInstance->table('users')->insert(['user_name' => "adsddfasd`dd",'user_email'=>'hello']);
 
-InitDatabase::getInstance('default')->commit();
+// InitDatabase::getInstance('default')->commit();

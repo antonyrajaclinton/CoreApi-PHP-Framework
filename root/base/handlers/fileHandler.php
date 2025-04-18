@@ -48,7 +48,7 @@ class File
         ];
     }
 
-    private static function getFileName($fileName = null, $getExtension): string
+    private static function getFileName($fileName = null, $getExtension=null): string
     {
         if (!$fileName) {
             return Utilities::uuid() . '.' . self::getExtension($getExtension);
