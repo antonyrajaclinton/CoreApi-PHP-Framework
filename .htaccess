@@ -14,9 +14,15 @@ RewriteRule ^(.*)$ index.php/$1 [L]
     Require all denied
 </FilesMatch>
 
+# Block access to sensitive files
 <FilesMatch "^(\.git|composer\.json|composer\.lock|env\.example|\.ht)">
     Require all denied
 </FilesMatch>
+
+# 🔒 Block access to the database folder and all its contents
+<DirectoryMatch "^.*/database/">
+    Require all denied
+</DirectoryMatch>
 
 # Set environment variable (optional)
 SetEnv APP_ENVIRONMENT development

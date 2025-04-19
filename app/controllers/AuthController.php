@@ -25,7 +25,7 @@ class AuthController
          "password" => Request::input('password'),
          "profile_image" => $uploadProfileImage->fileUrl
       ];
-
+ 
 
       Response::JSON(['message' => 'Registered']);
    }
