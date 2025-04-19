@@ -10,22 +10,26 @@ use Root\Base\Handlers\Response;
 class AuthController
 {
 
-   public function signIn()
+   public function signIn(): void
    {
-      $getUserName = Request::input('userName');
-      $getEmailAddress = Request::input('userEmail');
-      $getPassword = Request::input();
-      $uploadProfileImage = File::upload('file', 'uploads/profileImages');
 
+      $validationResponse = Validation::validate(Request::input(), ['name', 'emailAddress:email', 'password']);
+      if (!$validationResponse->status) {
+         Response::JSON(['status' => false, 'message' => $validationResponse->error], 400);
+      }
+
+      $uploadProfileImage = File::upload('file', 'uploads/profileImages');
       $fields = [
-         "userName" => $getUserName,
-         "email" =>  $getEmailAddress
+         "user_name" =>  Request::input('name'),
+         "email" => Request::input('emailAddress'),
+         "password" => Request::input('password'),
+         "profile_image" => $uploadProfileImage->fileUrl
       ];
 
-      Validation::validate($fields, ['userName', 'email:email'], true);
-      
+
       Response::JSON(['message' => 'Registered']);
    }
+
    public function signUp()
    {
       echo 123445455;

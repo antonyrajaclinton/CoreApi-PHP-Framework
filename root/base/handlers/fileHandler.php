@@ -7,13 +7,13 @@ use Root\Base\Utilities;
 
 class File
 {
-    public static function upload($requestFileName = 'file', $uploadPath = null, $alternativeName = null): array
+    public static function upload($requestFileName = 'file', $uploadPath = null, $alternativeName = null): object
     {
         $getFile = Request::file($requestFileName);
         if (!$getFile) {
-            return ['fileName' => null, 'filePath' => null, 'fileUrl' => null];
+            return (object)['fileName' => null, 'filePath' => null, 'fileUrl' => null];
         }
-        $fileNames =   $filePaths = $fileUrls = [];
+        $fileNames = $filePaths = $fileUrls = [];
         if (!$uploadPath) {
             $uploadPath = "uploads/common";
         }
@@ -33,7 +33,7 @@ class File
             }
         } else {
             if ($getFile['error'] !== UPLOAD_ERR_OK) {
-                return ['fileName' => null, 'filePath' => null, 'fileUrl' => null];
+                return (object)['fileName' => null, 'filePath' => null, 'fileUrl' => null];
             }
             $alternativeNewFileName = self::getFileName($alternativeName, $getFile['name']);
             $fileNames[] = $alternativeNewFileName;
@@ -41,14 +41,14 @@ class File
             $fileUrls[] = $getBaseUrl . '/' . $uploadPath . $alternativeNewFileName;
             move_uploaded_file($getFile['tmp_name'], APP_PATH . '/' . $uploadPath . $alternativeNewFileName);
         }
-        return [
+        return (object)[
             'fileName' => implode(',', $fileNames),
             'filePath' => implode(',', $filePaths),
             'fileUrl' => implode(',', $fileUrls)
         ];
     }
 
-    private static function getFileName($fileName = null, $getExtension=null): string
+    private static function getFileName($fileName = null, $getExtension = null): string
     {
         if (!$fileName) {
             return Utilities::uuid() . '.' . self::getExtension($getExtension);
