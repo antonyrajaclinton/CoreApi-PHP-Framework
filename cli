@@ -1,0 +1,11 @@
+<?php
+require_once 'root/argumentHandler/initHandler.php';
+use Root\ArgumentHandler\InitArgument;
+
+
+if (php_sapi_name() !== 'cli') {
+    exit("This script must be run from the CLI.\n");
+}
+
+$getInstance = new InitArgument($argv);
+$getInstance->init();
