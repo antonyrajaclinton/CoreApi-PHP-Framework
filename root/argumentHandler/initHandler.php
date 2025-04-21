@@ -5,16 +5,18 @@ namespace Root\ArgumentHandler;
 class InitArgument
 {
     private $arg = [];
+    private $argMain = '';
     private $arg1 = null;
     private $arg2 = null;
     private $arg3 = null;
     private $arg4 = null;
     public function __construct($arguments = [])
     {
+        $this->argMain = (!empty($arguments[0])) ? strtolower(trim($arguments[0])) : '';
         if (!isset($arguments[1]) || !isset($arguments[0])) {
             $message = "no argument found..! \n\n";
             $message .= "Available Arguments: \n";
-            $message .= "php server : php cli serve\n";
+            $message .= "php server : php {$this->argMain} serve\n";
 
             die($message);
         }
@@ -49,7 +51,7 @@ class InitArgument
         $host = (!empty($getOptions['host'])) ? $getOptions['host'] : 'localhost';
         $port = (!empty($getOptions['port'])) ? $getOptions['port'] : '8000';
         echo "🚀 Starting development server at http://{$host}:{$port}\n";
-        echo "🔧 To use a different host/port: php cli serve --host={$host} --port={$port}\n";
+        echo "🔧 To use a different host/port: php {$this->argMain} serve --host={$host} --port={$port}\n";
         echo "🛑 Press Ctrl+C to stop\n";
 
         passthru("php -S {$host}:{$port} index.php");

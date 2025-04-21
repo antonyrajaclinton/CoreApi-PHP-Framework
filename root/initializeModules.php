@@ -12,6 +12,7 @@ foreach ($handlerFiles as $file) {
 
 require_once 'base/utilities.php';
 require_once 'base/exception.php';
+require_once 'base/baseModel.php';
 require_once 'init/initDatabase.php';
 require_once 'base/db.php';
 
@@ -30,7 +31,7 @@ foreach ($controllerFiles as $file) {
 }
 
 //Models:
-$modelFiles = glob('models/*.php');
+$modelFiles = glob('app/models/*.php');
 foreach ($modelFiles as $file) {
     require_once $file;
 }

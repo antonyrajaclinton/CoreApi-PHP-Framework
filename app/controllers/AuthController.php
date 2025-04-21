@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 use Root\Base\Handlers\Request;
 use Root\Base\Handlers\File;
