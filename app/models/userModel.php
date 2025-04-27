@@ -3,12 +3,18 @@
 namespace App\Models;
 
 use Root\Base\BaseModel;
+use Root\Migration\MigrationBP;
 
 class UserModel extends BaseModel
 {
-    public $tableName = 'users';
-    public $primaryId = "user_id";
-}
+    public static $tableName = 'users';
+    public static $primaryId = "user_id";
+    public static $timeStamp = true;
 
-$test = new UserModel();
-$test->insert();
+    public function schemaColumn()
+    {
+        return [
+            'userName' => ['name' => 'user_name', 'type' => MigrationBP::dataType()->text()]
+        ];
+    }
+}

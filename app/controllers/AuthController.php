@@ -6,6 +6,8 @@ use Root\Base\Handlers\Request;
 use Root\Base\Handlers\File;
 use Root\Base\Handlers\Validation;
 use Root\Base\Handlers\Response;
+use App\Models\UserModel;
+use Root\Base\DB;
 
 class AuthController
 {
@@ -21,11 +23,15 @@ class AuthController
       $uploadProfileImage = File::upload('file', 'uploads/profileImages');
       $fields = [
          "user_name" =>  Request::input('name'),
-         "email" => Request::input('emailAddress'),
+         "user_email" => Request::input('emailAddress'),
          "password" => Request::input('password'),
-         "profile_image" => $uploadProfileImage->fileUrl
+         // "profile_image" => $uploadProfileImage->fileUrl
       ];
- 
+      // $getInstance = new DB();
+      UserModel::create($fields);
+      DB::commit();
+      DB::lastQuery();
+
 
       Response::JSON(['message' => 'Registered']);
    }

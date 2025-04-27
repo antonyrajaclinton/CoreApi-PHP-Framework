@@ -8,24 +8,25 @@ use \Exception;
 
 class DB
 {
-    protected $dbConnection = null;
-    protected $tableName = null;
-    protected $primaryKey = 'id';
-    protected $lastQuery = null;
+    private $dbConnection = null;
+    private $tableName = null;
+    private $lastQuery = null;
 
     public function __construct($dbInstanceName = 'default')
     {
         $this->dbConnection = InitDatabase::getInstance($dbInstanceName);
     }
-    public function table($tableName)
+    public function table(string $tableName)
     {
         $this->tableName = $tableName;
         return $this;
     }
-    public function lastQuery()
+    private function storeQuery(string $query): string
     {
-        return $this->lastQuery;
+        $GLOBALS['lastQuery'] = $this->lastQuery = $query;
+        return $query;
     }
+
     public function insert($data)
     {
         if ($this->tableName == null) {
@@ -49,15 +50,16 @@ class DB
                 $dataBValues[] =  $value;
             }
         }
-        $this->lastQuery = "INSERT INTO {$this->tableName} ($columns) VALUES (" . implode(",", $dataBValues) . ")";
+        $this->storeQuery("INSERT INTO {$this->tableName} ($columns) VALUES (" . implode(",", $dataBValues) . ")");
         $this->dbConnection->query($this->lastQuery);
         return $this->dbConnection->lastInsertId();
     }
+    public static function lastQuery()
+    {
+        return (isset($GLOBALS['lastQuery'])) ? $GLOBALS['lastQuery'] : null;
+    }
+    public static function commit($dbName = 'default')  //for rollback
+    {
+        return InitDatabase::commit($dbName);
+    }
 }
-
-
-// $getInstance = new DB();
-
-// $getInstance->table('users')->insert(['user_name' => "adsddfasd`dd",'user_email'=>'hello']);
-
-// InitDatabase::getInstance('default')->commit();

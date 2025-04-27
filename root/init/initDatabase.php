@@ -1,10 +1,12 @@
 <?php
+
 namespace Root\Init;
 
 require_once APP_PATH . '/app/config/dataBaseConfig.php';
 
 use PDO;
 use Exception;
+
 $GLOBALS['dataBaseConfig'] = $dataBaseConfig;
 class InitDatabase
 {
@@ -35,12 +37,27 @@ class InitDatabase
             }
         }
     }
-    public static function getInstance($dbName = 'default')
+    public static function getInstance(string $dbInstanceName)
     {
-        if (!isset(self::$dbConnection[$dbName])) {
+        if (!isset(self::$dbConnection[$dbInstanceName])) {
             self::pdoConnect();
         }
-        return self::$dbConnection[$dbName];
+        return self::$dbConnection[$dbInstanceName];
+    }
+    public static function commit(string $dbInstanceName = 'default')
+    {
+        if (isset($GLOBALS['dataBaseConfig'][$dbInstanceName])) {
+            if (isset($GLOBALS['dataBaseConfig'][$dbInstanceName]['rollback'])) {
+                if (!empty($GLOBALS['dataBaseConfig'][$dbInstanceName]['rollback'])) {
+                    return self::getInstance($dbInstanceName)->commit();
+                }
+            } else {
+                throw new Exception("First, add 'rollback' => true/false to the database configuration in app/config/dataBaseConfig.php");
+            }
+        } else {
+            throw new Exception("No Database Instance found in that name: {$dbInstanceName}");
+        }
+        return false;
     }
 }
 
