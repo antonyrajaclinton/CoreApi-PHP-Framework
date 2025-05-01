@@ -2,6 +2,11 @@
 
 namespace Root\ArgumentHandler;
 
+require_once APP_PATH . '/root/init/initEnv.php';
+require_once APP_PATH . '/root/migration/migrationCliHelper.php';
+
+use Root\Migration\MigrationCliHelper;
+
 class InitArgument
 {
     private $arg = [];
@@ -31,6 +36,8 @@ class InitArgument
     {
         if ($this->arg1 == 'serve') {
             $this->serve();
+        } else if ($this->arg1 == 'migrate') {
+            MigrationCliHelper::initMigration();
         }
     }
     public function getOptions(): array

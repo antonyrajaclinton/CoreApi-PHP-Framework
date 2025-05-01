@@ -44,6 +44,14 @@ class InitDatabase
         }
         return self::$dbConnection[$dbInstanceName];
     }
+    public static function getDataBaseConfig(string $dbInstanceName)
+    {
+        if (isset($GLOBALS['dataBaseConfig'][$dbInstanceName])) {
+            return $GLOBALS['dataBaseConfig'][$dbInstanceName];
+        } else {
+            return [];
+        }
+    }
     public static function commit(string $dbInstanceName = 'default')
     {
         if (isset($GLOBALS['dataBaseConfig'][$dbInstanceName])) {

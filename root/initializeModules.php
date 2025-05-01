@@ -14,7 +14,7 @@ require_once 'base/utilities.php';
 require_once 'base/exception.php';
 require_once 'base/baseModel.php';
 require_once 'init/initDatabase.php';
-require_once 'blueprints/migration.php';
+// require_once 'blueprints/migration.php';
 require_once 'base/db.php';
 
 //routes:
