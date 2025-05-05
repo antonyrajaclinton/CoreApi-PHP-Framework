@@ -7,11 +7,11 @@ function loadEnv($filePath)
     }
     $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0) continue; // Skip comments
-        putenv($line);
-        list($key, $value) = explode('=', $line, 2);
-        $_ENV[$key] = $value;
-        $_SERVER[$key] = $value;
+        $line = trim($line);
+        if (strpos($line, '#') !== 0 && !empty($line)) {
+            $line = str_replace(['"', "'"], '', $line);
+            putenv($line);
+        }
     }
 }
 
@@ -24,7 +24,7 @@ if ($getEnvironmentVaraible && !empty($getEnvironmentVaraible)) {
 }
 
 
-function env($key, $defaultValue)
+function env($key, $defaultValue = '')
 {
     if ($key && getenv($key)) {
         $returnValue = getenv($key);

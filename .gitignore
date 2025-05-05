@@ -1,0 +1,7 @@
+logs/*
+!logs/index.html
+uploads/*
+!uploads/index.html
+database/*
+!database/index.html
+vendor
